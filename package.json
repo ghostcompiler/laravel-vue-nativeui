@@ -1,7 +1,7 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
     "name": "laravel-vue-nativeui",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "type": "module",
     "scripts": {
@@ -9,6 +9,7 @@
         "build:ssr": "vite build && vite build --ssr",
         "dev": "vite",
         "ssr": "php artisan inertia:start-ssr",
+        "start": "npm run build:ssr && concurrently --kill-others -c \"#18a058,#2563eb\" -n laravel,ssr \"php artisan serve\" \"php artisan inertia:start-ssr\"",
         "ssr:stop": "php artisan inertia:stop-ssr"
     },
     "devDependencies": {

@@ -229,6 +229,31 @@ var menuOptions = [
 		key: "docs"
 	}
 ];
+var installMethods = [
+	{
+		name: "composer",
+		tab: "Composer",
+		commands: ["composer create-project ghostcompiler/laravel-vue-nativeui"]
+	},
+	{
+		name: "installer",
+		tab: "Laravel Installer",
+		commands: ["laravel new project --using=ghostcompiler/laravel-vue-nativeui"]
+	},
+	{
+		name: "clone",
+		tab: "Git Clone",
+		commands: [
+			"git clone https://github.com/ghostcompiler/laravel-vue-nativeui demo",
+			"cd demo",
+			"composer install",
+			"npm install",
+			"cp .env.example .env",
+			"php artisan key:generate",
+			"npm run start"
+		]
+	}
+];
 var CodeSnippet = defineComponent({
 	name: "CodeSnippet",
 	setup(_, { slots }) {
@@ -271,7 +296,7 @@ var __default__ = defineComponent({
 			message.success(`Selected: ${key}`);
 		};
 		return () => {
-			let _slot;
+			let _slot2, _slot3;
 			return createVNode(Fragment, null, [
 				createVNode(Head, { "title": "Laravel Vue JSX Starter" }, null),
 				createVNode(NLayout, {
@@ -361,13 +386,35 @@ var __default__ = defineComponent({
 							"onClick": theme?.toggleTheme
 						}, { default: () => [createTextVNode("Toggle Theme")] })] })] })
 					]),
+					createVNode(NCard, {
+						"title": "Installation",
+						"bordered": true
+					}, { default: () => [createVNode(NTabs, {
+						"type": "segment",
+						"animated": true
+					}, _isSlot(_slot2 = installMethods.map((method) => {
+						let _slot;
+						return createVNode(NTabPane, {
+							"key": method.name,
+							"name": method.name,
+							"tab": method.tab
+						}, { default: () => [createVNode(NSpace, {
+							"vertical": true,
+							"size": 10
+						}, _isSlot(_slot = method.commands.map((command) => createVNode(CodeSnippet, { "key": command }, _isSlot(command) ? command : { default: () => [command] }))) ? _slot : { default: () => [_slot] })] });
+					})) ? _slot2 : { default: () => [_slot2] }), createVNode(NAlert, {
+						"class": "mt-4",
+						"title": "Start command",
+						"type": "info",
+						"bordered": true
+					}, { default: () => [createTextVNode("Run npm run start to build browser assets, build the SSR bundle, start Laravel, and start the Inertia SSR renderer.")] })] }),
 					createVNode(NCard, { "bordered": true }, { default: () => [createVNode("div", { "class": "feature-grid" }, [createVNode("div", null, [createVNode(NSpace, {
 						"align": "center",
 						"size": 10
 					}, { default: () => [createVNode(NIcon, {
 						"size": 24,
 						"color": "#18a058"
-					}, { default: () => [createVNode(Zap, null, null)] }), createVNode(NH2, { "class": "!m-0 !text-2xl" }, { default: () => [createTextVNode("Included setup")] })] }), createVNode(NList, { "class": "mt-4" }, _isSlot(_slot = stackItems.map((item) => createVNode(NListItem, { "key": item }, { default: () => [createVNode(NSpace, { "align": "center" }, { default: () => [createVNode(NIcon, { "color": "#18a058" }, { default: () => [createVNode(CheckCircle, null, null)] }), createVNode(NText, null, _isSlot(item) ? item : { default: () => [item] })] })] }))) ? _slot : { default: () => [_slot] })]), createVNode("div", { "class": "rounded-lg border border-black/10 bg-[#f6f8fb] p-5 dark:border-white/10 dark:bg-[#10151d]" }, [createVNode(NText, { "depth": 3 }, { default: () => [createTextVNode("Production commands")] }), createVNode("div", { "class": "mt-4 flex flex-col gap-3" }, [createVNode(CodeSnippet, null, { default: () => [createTextVNode("npm run build:ssr")] }), createVNode(CodeSnippet, null, { default: () => [createTextVNode("php artisan inertia:start-ssr")] })])])])] }),
+					}, { default: () => [createVNode(Zap, null, null)] }), createVNode(NH2, { "class": "!m-0 !text-2xl" }, { default: () => [createTextVNode("Included setup")] })] }), createVNode(NList, { "class": "mt-4" }, _isSlot(_slot3 = stackItems.map((item) => createVNode(NListItem, { "key": item }, { default: () => [createVNode(NSpace, { "align": "center" }, { default: () => [createVNode(NIcon, { "color": "#18a058" }, { default: () => [createVNode(CheckCircle, null, null)] }), createVNode(NText, null, _isSlot(item) ? item : { default: () => [item] })] })] }))) ? _slot3 : { default: () => [_slot3] })]), createVNode("div", { "class": "rounded-lg border border-black/10 bg-[#f6f8fb] p-5 dark:border-white/10 dark:bg-[#10151d]" }, [createVNode(NText, { "depth": 3 }, { default: () => [createTextVNode("Production start")] }), createVNode("div", { "class": "mt-4 flex flex-col gap-3" }, [createVNode(CodeSnippet, null, { default: () => [createTextVNode("npm run start")] }), createVNode(CodeSnippet, null, { default: () => [createTextVNode("npm run build:ssr")] })])])])] }),
 					createVNode("div", { "class": "app-grid" }, [
 						createVNode(NAlert, {
 							"title": "Theme cache",

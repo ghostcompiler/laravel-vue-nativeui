@@ -16,7 +16,7 @@ A full Laravel starter project using Vue 3, Inertia, JSX, Naive UI, vue-sonner, 
 
 Repository: `ghostcompiler/laravel-vue-nativeui`
 
-Current release: `v1.0.0`
+Current release: `v1.0.1`
 
 The app is intentionally set up without TypeScript or TSX. Pages, layouts, reusable components, and utilities are generated as JavaScript and JSX files.
 
@@ -127,11 +127,35 @@ export default defineComponent({
 
 ## Installation
 
+Create a new project directly from Composer:
+
 ```bash
+composer create-project ghostcompiler/laravel-vue-nativeui
+```
+
+Create a new project with the Laravel installer:
+
+```bash
+laravel new project --using=ghostcompiler/laravel-vue-nativeui
+```
+
+Clone the GitHub repository manually:
+
+```bash
+git clone https://github.com/ghostcompiler/laravel-vue-nativeui demo
+cd demo
 composer install
 npm install
 cp .env.example .env
 php artisan key:generate
+npm run start
+```
+
+`npm run start` builds the browser assets, builds the SSR bundle, starts Laravel, and starts the Inertia SSR renderer.
+
+If your application uses database tables, run migrations before starting the app:
+
+```bash
 php artisan migrate
 ```
 
@@ -357,6 +381,12 @@ Run the production build:
 
 ```bash
 npm run build:ssr
+```
+
+Build the app and start Laravel with the Inertia SSR renderer:
+
+```bash
+npm run start
 ```
 
 Run PHP formatting checks:

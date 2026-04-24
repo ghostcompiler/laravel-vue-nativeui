@@ -90,6 +90,32 @@ const menuOptions = [
     { label: 'Open documentation', key: 'docs' },
 ];
 
+const installMethods = [
+    {
+        name: 'composer',
+        tab: 'Composer',
+        commands: ['composer create-project ghostcompiler/laravel-vue-nativeui'],
+    },
+    {
+        name: 'installer',
+        tab: 'Laravel Installer',
+        commands: ['laravel new project --using=ghostcompiler/laravel-vue-nativeui'],
+    },
+    {
+        name: 'clone',
+        tab: 'Git Clone',
+        commands: [
+            'git clone https://github.com/ghostcompiler/laravel-vue-nativeui demo',
+            'cd demo',
+            'composer install',
+            'npm install',
+            'cp .env.example .env',
+            'php artisan key:generate',
+            'npm run start',
+        ],
+    },
+];
+
 const CodeSnippet = defineComponent({
     name: 'CodeSnippet',
     setup(_, { slots }) {
@@ -224,6 +250,24 @@ export default defineComponent({
                                 </NCard>
                             </div>
 
+                            <NCard title="Installation" bordered>
+                                <NTabs type="segment" animated>
+                                    {installMethods.map((method) => (
+                                        <NTabPane key={method.name} name={method.name} tab={method.tab}>
+                                            <NSpace vertical size={10}>
+                                                {method.commands.map((command) => (
+                                                    <CodeSnippet key={command}>{command}</CodeSnippet>
+                                                ))}
+                                            </NSpace>
+                                        </NTabPane>
+                                    ))}
+                                </NTabs>
+                                <NAlert class="mt-4" title="Start command" type="info" bordered>
+                                    Run npm run start to build browser assets, build the SSR bundle, start
+                                    Laravel, and start the Inertia SSR renderer.
+                                </NAlert>
+                            </NCard>
+
                             <NCard bordered>
                                 <div class="feature-grid">
                                     <div>
@@ -248,10 +292,10 @@ export default defineComponent({
                                     </div>
 
                                     <div class="rounded-lg border border-black/10 bg-[#f6f8fb] p-5 dark:border-white/10 dark:bg-[#10151d]">
-                                        <NText depth={3}>Production commands</NText>
+                                        <NText depth={3}>Production start</NText>
                                         <div class="mt-4 flex flex-col gap-3">
+                                            <CodeSnippet>npm run start</CodeSnippet>
                                             <CodeSnippet>npm run build:ssr</CodeSnippet>
-                                            <CodeSnippet>php artisan inertia:start-ssr</CodeSnippet>
                                         </div>
                                     </div>
                                 </div>
