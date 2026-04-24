@@ -24,10 +24,29 @@ function starterResourcePath(string $basePath, string $name, string $extension =
     return resource_path(trim($basePath, '/').'/'.$normalized.'.'.$extension);
 }
 
-function starterWriteFile(object $command, string $path, string $contents): int
+function starterRelativePath(string $path): string
+{
+    return Str::after(str_replace('\\', '/', $path), str_replace('\\', '/', base_path()).'/');
+}
+
+function starterCommandInfo(object $command, string $message): void
+{
+    (function () use ($message) {
+        $this->components->info($message);
+    })->call($command);
+}
+
+function starterCommandWarn(object $command, string $message): void
+{
+    (function () use ($message) {
+        $this->components->warn($message);
+    })->call($command);
+}
+
+function starterWriteFile(object $command, string $path, string $contents, string $type): int
 {
     if (File::exists($path) && ! $command->option('force')) {
-        $command->warn("File already exists: {$path}");
+        starterCommandWarn($command, sprintf('%s [%s] already exists.', $type, starterRelativePath($path)));
         $command->line('Run the command again with --force to overwrite it.');
 
         return 1;
@@ -36,7 +55,7 @@ function starterWriteFile(object $command, string $path, string $contents): int
     File::ensureDirectoryExists(dirname($path));
     File::put($path, $contents);
 
-    $command->info("Created: {$path}");
+    starterCommandInfo($command, sprintf('%s [%s] created successfully.', $type, starterRelativePath($path)));
 
     return 0;
 }
@@ -89,7 +108,7 @@ defineOptions({
         </section>
     </main>
 </template>
-VUE);
+VUE, 'Vue page');
 })->purpose('Create an Inertia Vue page in resources/js/pages');
 
 Artisan::command('make:layout {name : Layout name, for example AdminLayout or Settings/Shell} {--force : Overwrite an existing file}', function (string $name): int {
@@ -116,7 +135,7 @@ defineOptions({
         </NLayoutContent>
     </NLayout>
 </template>
-VUE);
+VUE, 'Vue layout');
 })->purpose('Create a Vue layout in resources/js/layouts');
 
 Artisan::command('make:component {name : Component name, for example EmptyState or Forms/TextInput} {--force : Overwrite an existing file}', function (string $name): int {
@@ -147,7 +166,7 @@ defineProps({
         </NSpace>
     </NCard>
 </template>
-VUE);
+VUE, 'Vue component');
 })->purpose('Create a reusable Vue component in resources/js/components');
 
 Artisan::command('make:lib {name : Library module name, for example formatters/date} {--force : Overwrite an existing file}', function (string $name): int {
@@ -163,5 +182,5 @@ Artisan::command('make:lib {name : Library module name, for example formatters/d
 export function {$exportName}(...values) {
     return values.filter(Boolean).join(' ');
 }
-JS);
+JS, 'JavaScript library');
 })->purpose('Create a plain JavaScript utility module in resources/js/lib');

@@ -1,7 +1,7 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
     "name": "laravel-vue-nativeui",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "private": true,
     "type": "module",
     "scripts": {

@@ -16,7 +16,7 @@ A full Laravel starter project using Vue 3, Inertia, Naive UI, vue-sonner, Tailw
 
 Repository: `ghostcompiler/laravel-vue-nativeui`
 
-Current release: `v1.0.4`
+Current release: `v1.0.5`
 
 The app is intentionally set up as a Vue single-file component project with plain JavaScript entry files.
 
