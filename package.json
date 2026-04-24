@@ -1,0 +1,34 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "name": "laravel-vue-nativeui",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "build:ssr": "vite build && vite build --ssr",
+        "dev": "vite",
+        "ssr": "php artisan inertia:start-ssr",
+        "ssr:stop": "php artisan inertia:stop-ssr"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "@vitejs/plugin-vue": "^6.0.6",
+        "@vitejs/plugin-vue-jsx": "^5.1.5",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^3.0.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^8.0.0"
+    },
+    "dependencies": {
+        "@css-render/vue3-ssr": "^0.15.14",
+        "@inertiajs/vite": "^3.0.3",
+        "@inertiajs/vue3": "^3.0.3",
+        "@vue/server-renderer": "^3.5.33",
+        "lucide-vue-next": "^1.0.0",
+        "naive-ui": "^2.44.1",
+        "vfonts": "^0.0.3",
+        "vue": "^3.5.33",
+        "vue-sonner": "^2.0.9"
+    }
+}
