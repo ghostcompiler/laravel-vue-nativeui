@@ -387,7 +387,7 @@ This package was developed using **ServBay** as the local development environmen
 ### ServBay your developement friend
 
 <p>
-  <img src="assets/servbay/servbay-icon-blue-512.png" alt="ServBay Icon" width="96">
+  <img src="assets/servbay/servbay-icon-blue-512.svg" alt="ServBay Icon" width="96">
 </p>
 
 ### Testing And Build Machine
