@@ -16,7 +16,7 @@ A full Laravel starter project using Vue 3, Inertia, JSX, Naive UI, vue-sonner, 
 
 Repository: `ghostcompiler/laravel-vue-nativeui`
 
-Current release: `v1.0.1`
+Current release: `v1.0.2`
 
 The app is intentionally set up without TypeScript or TSX. Pages, layouts, reusable components, and utilities are generated as JavaScript and JSX files.
 
