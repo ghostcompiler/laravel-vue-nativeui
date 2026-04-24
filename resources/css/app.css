@@ -94,17 +94,27 @@ select {
     width: min(520px, calc(100vw - 32px));
 }
 
+.command-snippet {
+    position: relative;
+}
+
 .code-snippet {
     display: block;
     overflow-wrap: anywhere;
     border: 1px solid rgba(23, 32, 51, 0.1);
     border-radius: 8px;
     background: rgba(23, 32, 51, 0.04);
-    padding: 10px 12px;
+    padding: 10px 44px 10px 12px;
     color: #243145;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.875rem;
     line-height: 1.45;
+}
+
+.command-copy {
+    position: absolute;
+    top: 6px;
+    right: 6px;
 }
 
 [data-theme='dark'] .code-snippet {

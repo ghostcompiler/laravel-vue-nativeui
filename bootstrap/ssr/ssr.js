@@ -2,7 +2,7 @@ import { Fragment, computed, createSSRApp, createTextVNode, createVNode, defineC
 import { Head, createInertiaApp, usePage } from "@inertiajs/vue3";
 import { Toaster, toast } from "vue-sonner";
 import { NAlert, NBadge, NButton, NCard, NCheckbox, NConfigProvider, NDataTable, NDatePicker, NDescriptions, NDescriptionsItem, NDialogProvider, NDivider, NDrawer, NDrawerContent, NDropdown, NForm, NFormItem, NGlobalStyle, NH1, NH2, NIcon, NInput, NInputNumber, NLayout, NLayoutContent, NLayoutHeader, NList, NListItem, NLoadingBarProvider, NMessageProvider, NModal, NNotificationProvider, NPageHeader, NPopover, NProgress, NRadioButton, NRadioGroup, NSelect, NSlider, NSpace, NStatistic, NSwitch, NTabPane, NTabs, NTag, NText, NTimeline, NTimelineItem, NTooltip, darkTheme, useDialog, useMessage } from "naive-ui";
-import { CheckCircle, ChevronDown, Moon, PanelRightOpen, Sparkles, Sun, Zap } from "lucide-vue-next";
+import { Check, CheckCircle, ChevronDown, Copy, Moon, PanelRightOpen, Sparkles, Sun, Zap } from "lucide-vue-next";
 import createServer from "@inertiajs/vue3/server";
 import { setup } from "@css-render/vue3-ssr";
 import { renderToString } from "vue/server-renderer";
@@ -257,7 +257,34 @@ var installMethods = [
 var CodeSnippet = defineComponent({
 	name: "CodeSnippet",
 	setup(_, { slots }) {
-		return () => createVNode("code", { "class": "code-snippet" }, [slots.default?.()]);
+		const copied = ref(false);
+		const getCommand = () => {
+			return (slots.default?.() ?? []).map((node) => typeof node.children === "string" ? node.children : "").join("").trim();
+		};
+		const copyCommand = async () => {
+			const command = getCommand();
+			if (!command || typeof navigator === "undefined" || !navigator.clipboard) {
+				toast.error("Copy is not available in this browser");
+				return;
+			}
+			await navigator.clipboard.writeText(command);
+			copied.value = true;
+			toast.success("Command copied");
+			window.setTimeout(() => {
+				copied.value = false;
+			}, 1400);
+		};
+		return () => createVNode("div", { "class": "command-snippet" }, [createVNode("code", { "class": "code-snippet" }, [slots.default?.()]), createVNode(NTooltip, { "trigger": "hover" }, {
+			trigger: () => createVNode(NButton, {
+				"class": "command-copy",
+				"quaternary": true,
+				"circle": true,
+				"size": "small",
+				"aria-label": "Copy command",
+				"onClick": copyCommand
+			}, { default: () => [createVNode(NIcon, null, { default: () => [copied.value ? createVNode(Check, null, null) : createVNode(Copy, null, null)] })] }),
+			default: () => copied.value ? "Copied" : "Copy command"
+		})]);
 	}
 });
 var __default__ = defineComponent({

@@ -47,7 +47,7 @@ import {
     useDialog,
     useMessage,
 } from 'naive-ui';
-import { CheckCircle, ChevronDown, Moon, PanelRightOpen, Sparkles, Sun, Zap } from 'lucide-vue-next';
+import { Check, CheckCircle, ChevronDown, Copy, Moon, PanelRightOpen, Sparkles, Sun, Zap } from 'lucide-vue-next';
 import { defineComponent, inject, ref } from 'vue';
 import AppLayout, { ThemeSymbol } from '../layouts/AppLayout';
 
@@ -119,10 +119,56 @@ const installMethods = [
 const CodeSnippet = defineComponent({
     name: 'CodeSnippet',
     setup(_, { slots }) {
+        const copied = ref(false);
+
+        const getCommand = () => {
+            const nodes = slots.default?.() ?? [];
+
+            return nodes
+                .map((node) => (typeof node.children === 'string' ? node.children : ''))
+                .join('')
+                .trim();
+        };
+
+        const copyCommand = async () => {
+            const command = getCommand();
+
+            if (!command || typeof navigator === 'undefined' || !navigator.clipboard) {
+                toast.error('Copy is not available in this browser');
+
+                return;
+            }
+
+            await navigator.clipboard.writeText(command);
+            copied.value = true;
+            toast.success('Command copied');
+
+            window.setTimeout(() => {
+                copied.value = false;
+            }, 1400);
+        };
+
         return () => (
-            <code class="code-snippet">
-                {slots.default?.()}
-            </code>
+            <div class="command-snippet">
+                <code class="code-snippet">{slots.default?.()}</code>
+                <NTooltip trigger="hover">
+                    {{
+                        trigger: () => (
+                            <NButton
+                                class="command-copy"
+                                quaternary
+                                circle
+                                size="small"
+                                aria-label="Copy command"
+                                onClick={copyCommand}
+                            >
+                                <NIcon>{copied.value ? <Check /> : <Copy />}</NIcon>
+                            </NButton>
+                        ),
+                        default: () => (copied.value ? 'Copied' : 'Copy command'),
+                    }}
+                </NTooltip>
+            </div>
         );
     },
 });
