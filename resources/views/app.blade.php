@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light dark">
 
-        @vite('resources/js/app.jsx')
+        @vite('resources/js/app.js')
         @inertiaHead
     </head>
     <body>

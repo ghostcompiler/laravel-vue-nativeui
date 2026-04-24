@@ -2,8 +2,8 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "ghostcompiler/laravel-vue-nativeui",
     "type": "project",
-    "description": "A Laravel, Inertia, Vue JSX, SSR, Naive UI, and vue-sonner starter kit.",
-    "keywords": ["laravel", "inertia", "vue", "jsx", "naive-ui", "ssr"],
+    "description": "A Laravel, Inertia, Vue, SSR, Naive UI, and vue-sonner starter kit.",
+    "keywords": ["laravel", "inertia", "vue", "naive-ui", "ssr"],
     "license": "MIT",
     "require": {
         "php": "^8.3",

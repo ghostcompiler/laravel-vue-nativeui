@@ -1,6 +1,6 @@
 # Laravel Vue NativeUI Developer Guide
 
-This guide documents the conventions used by the Laravel Vue JSX starter.
+This guide documents the conventions used by the Laravel Vue NativeUI starter.
 
 ## Local Setup
 
@@ -28,7 +28,7 @@ php artisan inertia:start-ssr
 
 ## Frontend Conventions
 
-- Use JSX files for Vue pages and components.
+- Use Vue single-file components for pages, layouts, and reusable components.
 - Put Inertia pages in `resources/js/pages`.
 - Put shared layouts in `resources/js/layouts`.
 - Put reusable UI components in `resources/js/components`.
@@ -61,11 +61,11 @@ Do not reintroduce a client-only localStorage theme bootstrap. That causes refre
 
 ## SSR Contract
 
-The SSR entry is `resources/js/ssr.jsx`.
+The SSR entry is `resources/js/ssr.js`.
 
 SSR must:
 
-- Resolve pages from `resources/js/pages/**/*.jsx`
+- Resolve pages from `resources/js/pages/**/*.vue`
 - Use `createSSRApp`
 - Install the Inertia plugin
 - Collect Naive UI CSS through `@css-render/vue3-ssr`

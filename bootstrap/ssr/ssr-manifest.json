@@ -1,10 +1,9 @@
 {
   "\u0000rolldown/runtime.js": [],
-  "../../../../../__vue-jsx-ssr-register-helper": [],
   "node_modules/vue-sonner/lib/index.css": [],
   "resources/css/app.css": [],
-  "resources/js/layouts/AppLayout.jsx": [],
-  "resources/js/pages/Home.jsx": [],
-  "resources/js/ssr.jsx": [],
+  "resources/js/layouts/AppLayout.vue": [],
+  "resources/js/pages/Home.vue": [],
+  "resources/js/ssr.js": [],
   "resources/js/theme/naive.js": []
 }

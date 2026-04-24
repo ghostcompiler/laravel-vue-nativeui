@@ -12,13 +12,13 @@
 
 # Laravel Vue NativeUI Starter
 
-A full Laravel starter project using Vue 3, Inertia, JSX, Naive UI, vue-sonner, Tailwind CSS, and proper server-side rendering support.
+A full Laravel starter project using Vue 3, Inertia, Naive UI, vue-sonner, Tailwind CSS, and proper server-side rendering support.
 
 Repository: `ghostcompiler/laravel-vue-nativeui`
 
-Current release: `v1.0.3`
+Current release: `v1.0.4`
 
-The app is intentionally set up without TypeScript or TSX. The starter itself supports both Vue single-file components and JSX, while the Artisan generators create Vue `.vue` files by default.
+The app is intentionally set up as a Vue single-file component project with plain JavaScript entry files.
 
 ## Naive UI Included
 
@@ -35,21 +35,21 @@ vfonts
 Primary Naive UI files:
 
 ```text
-resources/js/layouts/AppLayout.jsx      Naive UI providers and app shell
+resources/js/layouts/AppLayout.vue      Naive UI providers and app shell
 resources/js/theme/naive.js             Light/dark Naive UI theme tokens
-resources/js/pages/Home.jsx             Naive UI component showcase
-resources/js/ssr.jsx                    Naive UI SSR style collection
+resources/js/pages/Home.vue             Naive UI component showcase
+resources/js/ssr.js                     Naive UI SSR style collection
 ```
 
-Naive UI providers configured in `AppLayout.jsx`:
+Naive UI providers configured in `AppLayout.vue`:
 
-```jsx
-<NConfigProvider theme={resolveNaiveTheme(themeName.value)} themeOverrides={themeOverrides[themeName.value]}>
+```vue
+<NConfigProvider :theme="resolveNaiveTheme(themeName)" :theme-overrides="themeOverrides[themeName]">
     <NLoadingBarProvider>
         <NDialogProvider>
             <NNotificationProvider>
                 <NMessageProvider>
-                    {slots.default?.()}
+                    <slot />
                 </NMessageProvider>
             </NNotificationProvider>
         </NDialogProvider>
@@ -72,7 +72,7 @@ The homepage includes working examples of daily-use Naive UI components:
 
 Naive UI SSR is handled by `@css-render/vue3-ssr`. The SSR entry collects Naive UI generated CSS and pushes it into the Inertia SSR response head, so Naive UI components render styled on the first request instead of flashing during hydration.
 
-```jsx
+```js
 import { setup as setupCssRender } from '@css-render/vue3-ssr';
 
 cssRender = setupCssRender(app);
@@ -108,7 +108,7 @@ defineOptions({
 
 - Laravel 13 application scaffolded from `laravel/laravel`
 - Inertia Laravel v3 and `@inertiajs/vue3`
-- Vue 3 with JSX through Vite
+- Vue 3 single-file components through Vite
 - Inertia SSR with `php artisan inertia:start-ssr`
 - Naive UI with light and dark theme overrides
 - Naive UI SSR CSS collection through `@css-render/vue3-ssr`
@@ -211,7 +211,7 @@ The same value is shared globally through Inertia as `theme`. Vue, Naive UI, Son
 ## Artisan Generators
 
 This project includes starter-specific generators for frontend boilerplate.
-Pages, layouts, and components are generated as Vue single-file components. Existing JSX files continue to work because the Inertia resolver supports both `.vue` and `.jsx` pages.
+Pages, layouts, and components are generated as Vue single-file components.
 
 Create an Inertia page:
 
@@ -250,11 +250,11 @@ php artisan make:page Dashboard --force
 ## Frontend Structure
 
 ```text
-resources/js/app.jsx              Client-side Inertia entry
-resources/js/ssr.jsx              Server-side Inertia entry
-resources/js/layouts/             Vue and JSX layouts
-resources/js/pages/               Inertia Vue and JSX pages
-resources/js/components/          Reusable Vue and JSX components
+resources/js/app.js               Client-side Inertia entry
+resources/js/ssr.js               Server-side Inertia entry
+resources/js/layouts/             Vue layouts
+resources/js/pages/               Inertia Vue pages
+resources/js/components/          Reusable Vue components
 resources/js/lib/                 Plain JavaScript helpers
 resources/js/theme/naive.js       Naive UI theme tokens
 resources/css/app.css             Tailwind and app shell styles
@@ -269,13 +269,13 @@ Naive UI is the primary component library for this starter. It is installed with
 npm install naive-ui vfonts @css-render/vue3-ssr
 ```
 
-The app imports components directly from `naive-ui` inside JSX files:
+The app imports components directly from `naive-ui` inside Vue files:
 
-```jsx
+```js
 import { NButton, NCard, NInput, NSelect } from 'naive-ui';
 ```
 
-Naive UI is mounted once in `resources/js/layouts/AppLayout.jsx` through these providers:
+Naive UI is mounted once in `resources/js/layouts/AppLayout.vue` through these providers:
 
 - `NConfigProvider`
 - `NLoadingBarProvider`
@@ -286,13 +286,13 @@ Naive UI is mounted once in `resources/js/layouts/AppLayout.jsx` through these p
 
 The global provider receives the current server-shared theme:
 
-```jsx
+```vue
 <NConfigProvider
-    theme={resolveNaiveTheme(themeName.value)}
-    themeOverrides={themeOverrides[themeName.value]}
+    :theme="resolveNaiveTheme(themeName)"
+    :theme-overrides="themeOverrides[themeName]"
     abstract
 >
-    {slots.default?.()}
+    <slot />
 </NConfigProvider>
 ```
 
@@ -307,7 +307,7 @@ Theme tokens live in `resources/js/theme/naive.js`. This file defines:
 
 Naive UI generates component CSS through `css-render`. The SSR entry collects those styles per request with `@css-render/vue3-ssr`:
 
-```jsx
+```js
 import { setup as setupCssRender } from '@css-render/vue3-ssr';
 
 cssRender = setupCssRender(app);
@@ -356,8 +356,8 @@ import { NFormItem, NSelect } from 'naive-ui';
 
 vue-sonner is mounted in the app layout:
 
-```jsx
-<Toaster richColors closeButton expand position="top-right" theme={themeName.value} />
+```vue
+<Toaster rich-colors close-button expand position="top-right" :theme="themeName" />
 ```
 
 Use it anywhere in Vue:

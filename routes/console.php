@@ -61,7 +61,7 @@ Artisan::command('make:page {name : Page name, for example Dashboard or Admin/Us
     $component = starterComponentName($name);
     $path = starterResourcePath('js/pages', $name);
     $title = Str::headline($component);
-    $layoutImport = starterImportPath($path, resource_path('js/layouts/AppLayout.jsx'));
+    $layoutImport = starterImportPath($path, resource_path('js/layouts/AppLayout.vue'));
 
     return starterWriteFile($this, $path, <<<VUE
 <script setup>

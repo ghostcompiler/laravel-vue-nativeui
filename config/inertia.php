@@ -78,10 +78,6 @@ return [
         'extensions' => [
 
             'js',
-            'jsx',
-            'svelte',
-            'ts',
-            'tsx',
             'vue',
 
         ],
