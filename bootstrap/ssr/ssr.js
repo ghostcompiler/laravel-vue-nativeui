@@ -153,7 +153,7 @@ function _isSlot(s) {
 }
 var stackItems = [
 	"Laravel 13 blank project",
-	"Inertia Vue 3 in JSX",
+	"Inertia Vue 3 with Vue SFC and JSX support",
 	"SSR bundle and Artisan SSR scripts",
 	"Naive UI provider, global styles, theme overrides",
 	"vue-sonner toaster wired into the app layout"
@@ -325,7 +325,7 @@ var __default__ = defineComponent({
 		return () => {
 			let _slot2, _slot3;
 			return createVNode(Fragment, null, [
-				createVNode(Head, { "title": "Laravel Vue JSX Starter" }, null),
+				createVNode(Head, { "title": "Laravel Vue NativeUI Starter" }, null),
 				createVNode(NLayout, {
 					"class": "app-shell",
 					"embedded": true
@@ -340,7 +340,7 @@ var __default__ = defineComponent({
 						"class": "app-hero rounded-lg p-5 sm:p-7",
 						"bordered": false
 					}, { default: () => [createVNode(NPageHeader, null, {
-						title: () => createVNode(NH1, { "class": "!mb-2 !mt-4 !text-3xl sm:!text-4xl" }, { default: () => [createTextVNode("Laravel + Vue starter, rebuilt in JSX")] }),
+						title: () => createVNode(NH1, { "class": "!mb-2 !mt-4 !text-3xl sm:!text-4xl" }, { default: () => [createTextVNode("Laravel + Vue starter with Naive UI")] }),
 						subtitle: () => createVNode(NText, { "depth": 2 }, { default: () => [createTextVNode("A clean Inertia foundation with server-side rendering, Naive UI theming, and Sonner notifications already connected.")] }),
 						header: () => createVNode(NSpace, {
 							"align": "center",
@@ -353,7 +353,7 @@ var __default__ = defineComponent({
 							createVNode(NTag, {
 								"type": "info",
 								"round": false
-							}, { default: () => [createTextVNode("JSX")] }),
+							}, { default: () => [createTextVNode("Vue SFC")] }),
 							createVNode(NTag, {
 								"type": "warning",
 								"round": false
@@ -467,6 +467,7 @@ var __default__ = defineComponent({
 							"vertical": true,
 							"size": 10
 						}, { default: () => [
+							createVNode(NText, { "depth": 2 }, { default: () => [createTextVNode("Generators create Vue .vue files by default.")] }),
 							createVNode(CodeSnippet, null, { default: () => [createTextVNode("php artisan make:page Dashboard")] }),
 							createVNode(CodeSnippet, null, { default: () => [createTextVNode("php artisan make:component EmptyState")] }),
 							createVNode(CodeSnippet, null, { default: () => [createTextVNode("php artisan make:layout AdminLayout")] })
@@ -493,7 +494,7 @@ var __default__ = defineComponent({
 							"column": 2,
 							"labelPlacement": "top"
 						}, { default: () => [
-							createVNode(NDescriptionsItem, { "label": "Frontend" }, { default: () => [createTextVNode("Vue 3 JSX")] }),
+							createVNode(NDescriptionsItem, { "label": "Frontend" }, { default: () => [createTextVNode("Vue 3 SFC + JSX")] }),
 							createVNode(NDescriptionsItem, { "label": "Bridge" }, { default: () => [createTextVNode("Inertia Laravel")] }),
 							createVNode(NDescriptionsItem, { "label": "Theme" }, { default: () => [createTextVNode("Cookie-backed SSR")] }),
 							createVNode(NDescriptionsItem, { "label": "Notifications" }, { default: () => [createTextVNode("vue-sonner")] })
@@ -505,7 +506,7 @@ var __default__ = defineComponent({
 							createVNode(NTimelineItem, {
 								"type": "success",
 								"title": "Scaffold",
-								"content": "Create Laravel, install Inertia, and configure Vue JSX."
+								"content": "Create Laravel, install Inertia, and configure Vue SFC plus JSX support."
 							}, null),
 							createVNode(NTimelineItem, {
 								"type": "info",
@@ -683,7 +684,8 @@ var renderPage = async (page) => {
 		page,
 		title: (title) => title ? `${title} - ${appName}` : appName,
 		resolve: (name) => {
-			return (/* @__PURE__ */ Object.assign({ "./pages/Home.jsx": Home_exports }))[`./pages/${name}.jsx`];
+			const pages = /* @__PURE__ */ Object.assign({ "./pages/Home.jsx": Home_exports });
+			return pages[`./pages/${name}.vue`] ?? pages[`./pages/${name}.jsx`];
 		},
 		render: (app) => renderToString(app),
 		setup({ App, props, plugin }) {

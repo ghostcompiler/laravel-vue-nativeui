@@ -16,9 +16,9 @@ A full Laravel starter project using Vue 3, Inertia, JSX, Naive UI, vue-sonner, 
 
 Repository: `ghostcompiler/laravel-vue-nativeui`
 
-Current release: `v1.0.2`
+Current release: `v1.0.3`
 
-The app is intentionally set up without TypeScript or TSX. Pages, layouts, reusable components, and utilities are generated as JavaScript and JSX files.
+The app is intentionally set up without TypeScript or TSX. The starter itself supports both Vue single-file components and JSX, while the Artisan generators create Vue `.vue` files by default.
 
 ## Naive UI Included
 
@@ -86,22 +86,22 @@ To create a new Naive UI component:
 php artisan make:component Forms/StatusSelect
 ```
 
-Example component:
+Example generated component:
 
-```jsx
+```vue
+<script setup>
 import { NFormItem, NSelect } from 'naive-ui';
-import { defineComponent } from 'vue';
 
-export default defineComponent({
+defineOptions({
     name: 'StatusSelect',
-    setup() {
-        return () => (
-            <NFormItem label="Status">
-                <NSelect options={[{ label: 'Active', value: 'active' }]} />
-            </NFormItem>
-        );
-    },
 });
+</script>
+
+<template>
+    <NFormItem label="Status">
+        <NSelect :options="[{ label: 'Active', value: 'active' }]" />
+    </NFormItem>
+</template>
 ```
 
 ## Stack
@@ -211,6 +211,7 @@ The same value is shared globally through Inertia as `theme`. Vue, Naive UI, Son
 ## Artisan Generators
 
 This project includes starter-specific generators for frontend boilerplate.
+Pages, layouts, and components are generated as Vue single-file components. Existing JSX files continue to work because the Inertia resolver supports both `.vue` and `.jsx` pages.
 
 Create an Inertia page:
 
@@ -251,9 +252,9 @@ php artisan make:page Dashboard --force
 ```text
 resources/js/app.jsx              Client-side Inertia entry
 resources/js/ssr.jsx              Server-side Inertia entry
-resources/js/layouts/             JSX layouts
-resources/js/pages/               Inertia JSX pages
-resources/js/components/          Reusable JSX components
+resources/js/layouts/             Vue and JSX layouts
+resources/js/pages/               Inertia Vue and JSX pages
+resources/js/components/          Reusable Vue and JSX components
 resources/js/lib/                 Plain JavaScript helpers
 resources/js/theme/naive.js       Naive UI theme tokens
 resources/css/app.css             Tailwind and app shell styles
@@ -339,18 +340,16 @@ php artisan make:component Forms/StatusSelect
 
 Then import the Naive UI pieces you need:
 
-```jsx
+```vue
+<script setup>
 import { NFormItem, NSelect } from 'naive-ui';
+</script>
 
-export default defineComponent({
-    setup() {
-        return () => (
-            <NFormItem label="Status">
-                <NSelect options={[{ label: 'Active', value: 'active' }]} />
-            </NFormItem>
-        );
-    },
-});
+<template>
+    <NFormItem label="Status">
+        <NSelect :options="[{ label: 'Active', value: 'active' }]" />
+    </NFormItem>
+</template>
 ```
 
 ## Toasts

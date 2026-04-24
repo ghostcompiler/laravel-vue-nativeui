@@ -14,8 +14,9 @@ createServer(async (page) => {
         page,
         title: (title) => (title ? `${title} - ${appName}` : appName),
         resolve: (name) => {
-            const pages = import.meta.glob('./pages/**/*.jsx', { eager: true });
-            return pages[`./pages/${name}.jsx`];
+            const pages = import.meta.glob('./pages/**/*.{vue,jsx}', { eager: true });
+
+            return pages[`./pages/${name}.vue`] ?? pages[`./pages/${name}.jsx`];
         },
         render: (app) => renderToString(app),
         setup({ App, props, plugin }) {

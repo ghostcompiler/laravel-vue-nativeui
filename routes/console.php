@@ -14,7 +14,7 @@ function starterComponentName(string $name): string
     return Str::studly(class_basename(str_replace('\\', '/', $name)));
 }
 
-function starterResourcePath(string $basePath, string $name, string $extension = 'jsx'): string
+function starterResourcePath(string $basePath, string $name, string $extension = 'vue'): string
 {
     $normalized = collect(explode('/', str_replace('\\', '/', $name)))
         ->filter()
@@ -63,93 +63,92 @@ Artisan::command('make:page {name : Page name, for example Dashboard or Admin/Us
     $title = Str::headline($component);
     $layoutImport = starterImportPath($path, resource_path('js/layouts/AppLayout.jsx'));
 
-    return starterWriteFile($this, $path, <<<JSX
+    return starterWriteFile($this, $path, <<<VUE
+<script setup>
 import { Head } from '@inertiajs/vue3';
 import { NCard, NH1, NSpace, NText } from 'naive-ui';
-import { defineComponent } from 'vue';
 import AppLayout from '{$layoutImport}';
 
-export default defineComponent({
+defineOptions({
     name: '{$component}',
     layout: AppLayout,
-    setup() {
-        return () => (
-            <>
-                <Head title="{$title}" />
-
-                <main class="app-shell">
-                    <section class="app-container">
-                        <NCard bordered>
-                            <NSpace vertical size={12}>
-                                <NH1 class="!m-0">{$title}</NH1>
-                                <NText depth={2}>Start building this Inertia page in JSX.</NText>
-                            </NSpace>
-                        </NCard>
-                    </section>
-                </main>
-            </>
-        );
-    },
 });
-JSX);
-})->purpose('Create an Inertia JSX page in resources/js/pages');
+</script>
+
+<template>
+    <Head title="{$title}" />
+
+    <main class="app-shell">
+        <section class="app-container">
+            <NCard bordered>
+                <NSpace vertical :size="12">
+                    <NH1 class="!m-0">{$title}</NH1>
+                    <NText depth="2">Start building this Inertia page.</NText>
+                </NSpace>
+            </NCard>
+        </section>
+    </main>
+</template>
+VUE);
+})->purpose('Create an Inertia Vue page in resources/js/pages');
 
 Artisan::command('make:layout {name : Layout name, for example AdminLayout or Settings/Shell} {--force : Overwrite an existing file}', function (string $name): int {
     $component = starterComponentName($name);
     $path = starterResourcePath('js/layouts', $name);
 
-    return starterWriteFile($this, $path, <<<JSX
+    return starterWriteFile($this, $path, <<<VUE
+<script setup>
 import { NCard, NLayout, NLayoutContent, NSpace } from 'naive-ui';
-import { defineComponent } from 'vue';
 
-export default defineComponent({
+defineOptions({
     name: '{$component}',
-    setup(_, { slots }) {
-        return () => (
-            <NLayout class="app-shell" embedded>
-                <NLayoutContent class="app-container" embedded>
-                    <NCard bordered>
-                        <NSpace vertical size={16}>
-                            {slots.default?.()}
-                        </NSpace>
-                    </NCard>
-                </NLayoutContent>
-            </NLayout>
-        );
-    },
 });
-JSX);
-})->purpose('Create a JSX layout in resources/js/layouts');
+</script>
+
+<template>
+    <NLayout class="app-shell" embedded>
+        <NLayoutContent class="app-container" embedded>
+            <NCard bordered>
+                <NSpace vertical :size="16">
+                    <slot />
+                </NSpace>
+            </NCard>
+        </NLayoutContent>
+    </NLayout>
+</template>
+VUE);
+})->purpose('Create a Vue layout in resources/js/layouts');
 
 Artisan::command('make:component {name : Component name, for example EmptyState or Forms/TextInput} {--force : Overwrite an existing file}', function (string $name): int {
     $component = starterComponentName($name);
     $path = starterResourcePath('js/components', $name);
 
-    return starterWriteFile($this, $path, <<<JSX
+    return starterWriteFile($this, $path, <<<VUE
+<script setup>
 import { NCard, NSpace, NText } from 'naive-ui';
-import { defineComponent } from 'vue';
 
-export default defineComponent({
+defineOptions({
     name: '{$component}',
-    props: {
-        title: {
-            type: String,
-            default: '{$component}',
-        },
-    },
-    setup(props, { slots }) {
-        return () => (
-            <NCard bordered>
-                <NSpace vertical size={8}>
-                    <NText strong>{props.title}</NText>
-                    {slots.default?.()}
-                </NSpace>
-            </NCard>
-        );
+});
+
+defineProps({
+    title: {
+        type: String,
+        default: '{$component}',
     },
 });
-JSX);
-})->purpose('Create a reusable JSX component in resources/js/components');
+</script>
+
+<template>
+    <NCard bordered>
+        <NSpace vertical :size="8">
+            <NText strong>{{ title }}</NText>
+            <slot />
+        </NSpace>
+    </NCard>
+</template>
+VUE);
+})->purpose('Create a reusable Vue component in resources/js/components');
 
 Artisan::command('make:lib {name : Library module name, for example formatters/date} {--force : Overwrite an existing file}', function (string $name): int {
     $normalized = collect(explode('/', str_replace('\\', '/', $name)))

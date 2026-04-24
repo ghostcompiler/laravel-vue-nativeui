@@ -53,7 +53,7 @@ import AppLayout, { ThemeSymbol } from '../layouts/AppLayout';
 
 const stackItems = [
     'Laravel 13 blank project',
-    'Inertia Vue 3 in JSX',
+    'Inertia Vue 3 with Vue SFC and JSX support',
     'SSR bundle and Artisan SSR scripts',
     'Naive UI provider, global styles, theme overrides',
     'vue-sonner toaster wired into the app layout',
@@ -216,7 +216,7 @@ export default defineComponent({
 
         return () => (
             <>
-                <Head title="Laravel Vue JSX Starter" />
+                <Head title="Laravel Vue NativeUI Starter" />
 
                 <NLayout class="app-shell" embedded>
                     <NLayoutContent class="app-container" embedded>
@@ -226,7 +226,7 @@ export default defineComponent({
                                     {{
                                         title: () => (
                                             <NH1 class="!mb-2 !mt-4 !text-3xl sm:!text-4xl">
-                                                Laravel + Vue starter, rebuilt in JSX
+                                                Laravel + Vue starter with Naive UI
                                             </NH1>
                                         ),
                                         subtitle: () => (
@@ -241,7 +241,7 @@ export default defineComponent({
                                                     SSR Ready
                                                 </NTag>
                                                 <NTag type="info" round={false}>
-                                                    JSX
+                                                    Vue SFC
                                                 </NTag>
                                                 <NTag type="warning" round={false}>
                                                     Naive UI
@@ -370,6 +370,7 @@ export default defineComponent({
 
                                 <NCard title="Generator commands" bordered>
                                     <NSpace vertical size={10}>
+                                        <NText depth={2}>Generators create Vue .vue files by default.</NText>
                                         <CodeSnippet>php artisan make:page Dashboard</CodeSnippet>
                                         <CodeSnippet>php artisan make:component EmptyState</CodeSnippet>
                                         <CodeSnippet>php artisan make:layout AdminLayout</CodeSnippet>
@@ -389,7 +390,7 @@ export default defineComponent({
                                     </NTabPane>
                                     <NTabPane name="metadata" tab="Metadata">
                                         <NDescriptions bordered column={2} labelPlacement="top">
-                                            <NDescriptionsItem label="Frontend">Vue 3 JSX</NDescriptionsItem>
+                                            <NDescriptionsItem label="Frontend">Vue 3 SFC + JSX</NDescriptionsItem>
                                             <NDescriptionsItem label="Bridge">Inertia Laravel</NDescriptionsItem>
                                             <NDescriptionsItem label="Theme">Cookie-backed SSR</NDescriptionsItem>
                                             <NDescriptionsItem label="Notifications">vue-sonner</NDescriptionsItem>
@@ -400,7 +401,7 @@ export default defineComponent({
                                             <NTimelineItem
                                                 type="success"
                                                 title="Scaffold"
-                                                content="Create Laravel, install Inertia, and configure Vue JSX."
+                                                content="Create Laravel, install Inertia, and configure Vue SFC plus JSX support."
                                             />
                                             <NTimelineItem
                                                 type="info"
